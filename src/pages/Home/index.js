@@ -1,0 +1,48 @@
+import { useQuery } from "@tanstack/react-query";
+import { authLogin } from "../../service/index";
+import { googleLogout } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+
+const Home = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("googleToken");
+
+  const { data, isFetched } = useQuery(["dataaa"], () => authLogin(token), {
+    onSuccess: (data) => {
+      console.log(data.data);
+    },
+    enabled: token ? true : false,
+  });
+
+  const logOut = () => {
+    googleLogout();
+    localStorage.removeItem("googleToken");
+    navigate("/");
+  };
+
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "centre",
+          flexDirection: "column",
+        }}
+      >
+        <div>
+          {isFetched && (
+            <>
+              {/* <img src={} alt="" /> */}
+              <h1>{`Welocome , ${data.data.name}`}</h1>
+              <h1>{data.data.email}</h1>
+            </>
+          )}
+        </div>
+        <button onClick={logOut}>Logout</button>
+      </div>
+    </>
+  );
+};
+
+export default Home;
