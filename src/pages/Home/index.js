@@ -8,15 +8,14 @@ const Home = () => {
   const token = localStorage.getItem("googleToken");
 
   const { data, isFetched } = useQuery(["dataaa"], () => authLogin(token), {
-    onSuccess: (data) => {
-      console.log(data.data);
-    },
     enabled: token ? true : false,
   });
+   
 
   const logOut = () => {
     googleLogout();
     localStorage.removeItem("googleToken");
+    localStorage.removeItem("authToken");
     navigate("/");
   };
 
@@ -33,8 +32,10 @@ const Home = () => {
         <div>
           {isFetched && (
             <>
-              {/* <img src={} alt="" /> */}
-              <h1>{`Welocome , ${data.data.name}`}</h1>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <img src={data.data.picture} alt="" />
+                <h1>{`Welocome , ${data.data.name}`}</h1>
+              </div>
               <h1>{data.data.email}</h1>
             </>
           )}
@@ -46,3 +47,5 @@ const Home = () => {
 };
 
 export default Home;
+
+      

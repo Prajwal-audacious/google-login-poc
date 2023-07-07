@@ -1,10 +1,8 @@
-import Login from "./component/login";
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
+import { LoginRoute, ProtectedRoutes } from "./protectedRoutes";
 
 function App() {
   return (
-    <div
+    <div  
       style={{
         width: "100vw",
         height: "100vh",
@@ -17,10 +15,8 @@ function App() {
         boxSizing: "border-box",
       }}
     >
-      <Routes>
-        <Route  path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
+      <LoginRoute />
+      <ProtectedRoutes />
     </div>
   );
 }
